@@ -1,4 +1,4 @@
-package Model;
+package com.example.dbclpm.Model;
 
 public class TeacherModel {
 	int id;

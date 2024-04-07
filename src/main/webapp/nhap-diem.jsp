@@ -6,9 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Nhập điểm</title>
-<link rel="stylesheet" href="css/nhap-diem.css">
 </head>
 <body>
+	<link rel="stylesheet" href="css/nhap-diem.css">
 	<div class="list-term">
 		<h2>danh sach ky hoc dang dien ra</h2>
 		<table>
@@ -53,6 +53,7 @@
 	<div class="list-student" style="display: none">
 		<h2>danh sach sinh vien</h2>
 		<button onclick="back()">quay lai</button>
+		<button style="float: right">import excel</button>
 		<table>
 			<tr>
 				<td >code</td>

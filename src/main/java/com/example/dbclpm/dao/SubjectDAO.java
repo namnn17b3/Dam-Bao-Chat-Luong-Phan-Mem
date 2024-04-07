@@ -6,9 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.example.dbclpm.Model.SubjectModel;
 import com.example.dbclpm.dao.impl.PoolConnection;
-
-import Model.SubjectModel;
 
 public class SubjectDAO {
 	public ArrayList<SubjectModel> getListSubjectByIdTerm(int teacher_id, int term_id) throws SQLException{

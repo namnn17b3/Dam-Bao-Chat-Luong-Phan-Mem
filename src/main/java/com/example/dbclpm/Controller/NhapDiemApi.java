@@ -1,27 +1,31 @@
-package Controller;
+package com.example.dbclpm.Controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.dbclpm.Model.ClassModel;
+import com.example.dbclpm.Model.StudentModel;
+import com.example.dbclpm.Model.SubjectModel;
+import com.example.dbclpm.Model.TermModel;
 import com.example.dbclpm.dao.ClassDAO;
+import com.example.dbclpm.dao.PointDAO;
 import com.example.dbclpm.dao.StudentDAO;
 import com.example.dbclpm.dao.SubjectDAO;
 import com.example.dbclpm.dao.TermDAO;
 import com.google.gson.Gson;
 
-import Model.ClassModel;
-import Model.StudentModel;
-import Model.SubjectModel;
-import Model.TermModel;
 
 @WebServlet("/api/nhap-diem")
+@MultipartConfig
 public class NhapDiemApi extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,6 +39,11 @@ public class NhapDiemApi extends HttpServlet{
 		
 //		int teacher_id = setId((String) req.getSession().getAttribute("teacher_id"));
 		int teacher_id = 1;
+		
+		if(teacher_id==-1) {
+			resp.getWriter().write("login error!");
+			return;
+		}
 		
 		int term_id = setId(req.getParameter("term_id"));
 		
@@ -112,12 +121,53 @@ public class NhapDiemApi extends HttpServlet{
 		resp.getWriter().write(response);
 	}
 	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		PointDAO pointDAO = new PointDAO();
+		
+//		resp.setContentType("application/json");
+		
+//		resp.setCharacterEncoding("UTF-8");
+		
+		
+		float cc = setFloat(req.getParameter("cc"));
+		
+//		System.out.print(req.getParameter("cc"));
+		
+		float btl = setFloat(req.getParameter("btl"));
+		
+		float th = setFloat(req.getParameter("th"));
+		
+		float ktgk = setFloat(req.getParameter("ktgk"));
+		
+		float ktck = setFloat(req.getParameter("ktck"));
+		
+		int student_id = setId(req.getParameter("student_id"));
+		
+		int class_id = setId(req.getParameter("class_id"));
+		
+		String response = pointDAO.importScore(cc, btl, th, ktgk, ktck, class_id, student_id);
+		
+		resp.setContentType("aplication/json");
+		
+		resp.getWriter().write(response);
+	}
+	
 	public static int setId(String s) {
-		if(s==null || s=="null") {
+		if(s==null || s.isEmpty()) {
 			return -1;
 		}
 		else {
 			return Integer.valueOf(s);
+		}
+	}
+	public static Float setFloat(String s) {
+		if(s==null || s.isEmpty()) {
+			return (float) -1.0;
+		}
+		else {
+			return Float.valueOf(s);
 		}
 	}
 	

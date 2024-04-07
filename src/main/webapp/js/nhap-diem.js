@@ -290,7 +290,58 @@ function nhap_diem_view(){
 	document.querySelector('#ktck').value = student.ktck ?? null;
 }
 
+function validScore(x){
+	if(0.0 <= parseFloat(x) && parseFloat(x) <= 10.0){
+		return false;
+	}
+	else return true;
+}
 function submitScore(){
-	alert('send');
-	setDisplay(page-1);
+	let formData = new FormData();
+	
+	let cc = document.getElementById('cc').value;
+	let btl = document.getElementById('btl').value;
+	let th = document.getElementById('th').value;
+	let ktgk = document.getElementById('ktgk').value;
+	let ktck = document.getElementById('ktck').value;
+	
+	if(cc.trim()=='' || btl.trim()=='' || th.trim()=='' || ktgk.trim()=='' || ktck.trim()==''){
+		alert('diem khong duoc de trong');
+		return;
+	}
+	
+	if(validScore(cc) || validScore(btl) || validScore(th) || validScore(ktgk) || validScore(ktck)){
+		alert("diem phai trong khoang tu 0 -> 10 !");
+		return;
+	}
+	
+	formData.append("cc",cc);
+	formData.append("btl",btl);
+	formData.append("th",th);
+	formData.append("ktgk",ktgk);
+	formData.append("ktck",ktck);
+	formData.append("class_id",class_id);
+	formData.append("student_id",student.id);
+
+	const options = {
+		method: "POST",
+		body: formData
+	};
+	fetch("/DBCLPM/api/nhap-diem", options)
+	.then(response => {
+		return response.json();
+	})
+	.then(data => {
+		let resp = JSON.stringify(data);
+		if(resp == "true"){
+			alert('import thanh cong');
+		}
+		else alert(resp);
+		
+		setDisplay(page-1);
+	})
+	.catch(error => {
+		alert(error)
+	});
+	
 }

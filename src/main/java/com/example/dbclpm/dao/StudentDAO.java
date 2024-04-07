@@ -8,9 +8,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import com.example.dbclpm.Model.StudentModel;
 import com.example.dbclpm.dao.impl.PoolConnection;
-
-import Model.StudentModel;
 
 public class StudentDAO {
 	public ArrayList<StudentModel> getListStudentByIdTeacherTermSubjectClass(int teacher_id, int term_id, int subject_id, int class_id) throws SQLException{

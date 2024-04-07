@@ -6,9 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.example.dbclpm.Model.TermModel;
 import com.example.dbclpm.dao.impl.PoolConnection;
-
-import Model.TermModel;
 
 public class TermDAO {
 	public ArrayList<TermModel> getListTerm() throws SQLException {
