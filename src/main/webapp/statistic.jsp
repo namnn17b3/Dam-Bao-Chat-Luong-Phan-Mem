@@ -141,9 +141,7 @@
 		                    subjectDropdown.add(option);
 		                });
 		            })
-		            .catch(error => {
-		                showErrorDialog("Đã có lỗi xảy ra vui lòng thử lại sau!");
-		            });
+		            .catch(error => console.error("Error loading subject", error));
 		    }
 		}
 
@@ -188,7 +186,7 @@
 	                backButton.style.display = "block";
 	            })
 	            .catch(error => {
-	                showErrorDialog("Đã có lỗi xảy ra vui lòng thử lại sau!");
+	                showErrorDialog("Đã có lỗi xảy ra vui lòng thử lại sau");
 	            });
 		    }
 		}

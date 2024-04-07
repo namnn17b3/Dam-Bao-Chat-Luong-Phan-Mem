@@ -23,9 +23,9 @@ public class ApiGetSubjects extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        int teacherId = (int) req.getSession().getAttribute("teacherId");
+//		int teacherId = Integer.parseInt(req.getSession().getAttribute("teacherId"));
         // test
-//		int teacherId = 1;
+		int teacherId = 1;
         
         int termId = Integer.parseInt(req.getParameter("termId"));
         StatisticDao statisticDao = new StatisticDaoImpl();
