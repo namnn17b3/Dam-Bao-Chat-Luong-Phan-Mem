@@ -9,4 +9,13 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  
+  <session-config>
+    <session-timeout>1440</session-timeout> <!-- Thời gian hết hạn của phiên làm việc (phút) -->
+    <cookie-config>
+      <name>JSESSIONID</name> <!-- Tên của cookie JSESSIONID -->
+      <max-age>86400</max-age> <!-- Giá trị expires của cookie JSESSIONID (giây) -->
+      <!-- Các thuộc tính khác cho cookie -->
+    </cookie-config>
+  </session-config>
 </web-app>
