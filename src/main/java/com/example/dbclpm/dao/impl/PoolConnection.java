@@ -37,6 +37,7 @@ public class PoolConnection implements ServletContextListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("Pool Connection initalized!");
 	}
 	
 	public static HikariDataSource getPoolConnection() {
