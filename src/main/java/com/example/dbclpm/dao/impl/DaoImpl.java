@@ -46,6 +46,7 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -86,6 +87,7 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -125,6 +127,7 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -164,6 +167,7 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -198,6 +202,7 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -304,6 +309,7 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -338,6 +344,7 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -374,6 +381,7 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -409,6 +417,7 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -446,6 +455,7 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -515,6 +525,7 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -548,6 +559,7 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -577,6 +589,7 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -610,11 +623,133 @@ public class DaoImpl implements Dao {
             e.printStackTrace();
         } finally {
             try {
+                ppstm.close();
                 conn.close();
             } catch (Exception e2) {
                 e2.printStackTrace();
             }
         }
         return clazz;
+    }
+    
+    @Override
+    public Term getTermByClassId(int classId) {
+        Connection conn = null;
+        PreparedStatement ppstm = null;
+        Term term = null;
+        try {
+            conn = poolConnection.getConnection();
+            ppstm = conn.prepareStatement("select term.*\n"
+                    + "from class, term\n"
+                    + "where class.id = ? and class.term_id = term.id");
+            ppstm.setInt(1, classId);
+            
+            ResultSet rs = ppstm.executeQuery();
+            if (rs.next()) {
+                term = new Term();
+                term.setId(rs.getInt("id"));
+                term.setName(rs.getString("name"));
+                term.setStartDate(new Date(rs.getDate("start_date").getTime()));
+                term.setEndDate(new Date(rs.getDate("end_date").getTime()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                ppstm.close();
+                conn.close();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        return term;
+    }
+    
+    @Override
+    public Teacher getTeacherByClassId(int classId) {
+        Connection conn = null;
+        PreparedStatement ppstm = null;
+        Teacher teacher = null;
+        
+        try {
+            conn = poolConnection.getConnection();
+            ppstm = conn.prepareStatement("select teacher.*\n"
+                    + "from class, teacher\n"
+                    + "where class.id = ? and class.teacher_id = teacher.id");
+            ppstm.setInt(1, classId);
+            
+            ResultSet rs = ppstm.executeQuery();
+            if (rs.next()) {
+                teacher = new Teacher();
+                teacher.setId(rs.getInt("id"));
+                teacher.setName(rs.getString("name"));
+                teacher.setEmail(rs.getString("email"));
+                teacher.setPassword(rs.getString("password"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                ppstm.close();
+                conn.close();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        
+        return teacher;
+    }
+    
+    @Override
+    public Student getStudentById(int studentId) {
+        Connection conn = null;
+        PreparedStatement ppstm = null;
+        Student student = null;
+        
+        try {
+            conn = poolConnection.getConnection();
+            ppstm = conn.prepareStatement("select * from student where id = ?");
+            ppstm.setInt(1, studentId);
+            
+            ResultSet rs = ppstm.executeQuery();
+            if (rs.next()) {
+                student = new Student();
+                student.setId(rs.getInt("id"));
+                student.setName(rs.getString("name"));
+                student.setEmail(rs.getString("email"));
+                student.setPhone(rs.getString("phone"));
+                student.setAddress(rs.getString("address"));
+                student.setGender(rs.getString("gender"));
+                student.setPassword(rs.getString("password"));
+                student.setDateOfBirth(new Date(rs.getDate("date_of_birth").getTime()));
+                student.setAdministrativeClass(rs.getString("administrative_class"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                ppstm.close();
+                conn.close();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        
+        return student;
+    }
+    
+    @Override
+    public void savePointByClassIdAndStudentId(Connection conn, int classId, int studentId, Float cc, Float btl, Float th, Float ktgk, Float ktck) throws Exception {
+        PreparedStatement ppstm = conn.prepareStatement("update point\n"
+                + "set cc = ?, btl = ?, th = ?, ktgk = ?, ktck = ?\n"
+                + "where class_id = ? and student_id = ?");
+        setFloat(ppstm, 1, cc);
+        setFloat(ppstm, 2, btl);
+        setFloat(ppstm, 3, th);
+        setFloat(ppstm, 4, ktgk);
+        setFloat(ppstm, 5, ktck);
+        ppstm.setInt(6, classId);
+        ppstm.setInt(7, studentId);
+        ppstm.execute();
     }
 }

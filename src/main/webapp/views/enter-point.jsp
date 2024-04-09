@@ -181,10 +181,11 @@
                 </div>
                 
                 <div class="wapper-btn-import">
-	                <button type="button" class="btn btn-success">
+	                <label for="excelFile" class="btn btn-success">
 	                    <i class="fa-solid fa-upload"></i>
 	                    <span>Import Excel</span>
-	                </button>
+	                </label>
+	                <input type="file" id="excelFile" name="excelFile" style="display: none;"/>
                 </div>
             </div>
             <div class="table-wapper"></div>

@@ -16,6 +16,7 @@ let _page = +querySearch.get('page') ? +querySearch.get('page') : 1;
 const btnModalSave = document.querySelector('.btn-save');
 const btnModalCancel = document.querySelector('.btn-cancle');
 const wapperBtnImport = document.querySelector('.wapper-btn-import');
+const inputExcelFile = wapperBtnImport.querySelector('#excelFile');
 
 function sweetalert(message, icon) {
     Swal.fire({
@@ -75,6 +76,7 @@ function renderPagination(data) {
     const quantity = data.quantity;
     const itemInPage = data.itemInPage;
     const page = data.page;
+    _page = page;
     const allPage = quantity % itemInPage == 0
         ? quantity / itemInPage | 0
         : (quantity / itemInPage) | 0 + 1;
@@ -401,6 +403,39 @@ function renderSelectionTerm() {
                 classId = null;
                 sweetalert('No data', 'error');
             }
+        })
+        .catch((error) => console.error(error));
+}
+
+inputExcelFile.oninput = () => {
+    if (!inputExcelFile.files.length) return;
+    
+    const formdata = new FormData();
+    formdata.append("excelFile", inputExcelFile.files[0]);
+    
+    const requestOptions = {
+        method: "POST",
+        body: formdata,
+        redirect: "follow"
+    };
+    
+    fetch(`${window.location.protocol}//${window.location.host}/api/teacher/import-excel?classId=${classId}`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+            const { message, status } = result;
+            if (status != 200) {
+                sweetalert(message, 'error');
+                return;
+            }
+            Swal.fire({
+                title: 'Notify',
+                text: message,
+                icon: 'success'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `${window.location.protocol}//${window.location.host}/${window.location.pathname}?page=${_page}&termId=${termId}&subjectId=${subjectId}&classId=${classId}`;
+                }
+            });
         })
         .catch((error) => console.error(error));
 }

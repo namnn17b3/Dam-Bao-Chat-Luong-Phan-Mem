@@ -1,5 +1,6 @@
 package com.example.dbclpm.dao;
 
+import java.sql.Connection;
 import java.util.List;
 
 import com.example.dbclpm.model.Teacher;
@@ -7,6 +8,7 @@ import com.example.dbclpm.model.Term;
 import com.example.dbclpm.dto.StatisticalStudentDto;
 import com.example.dbclpm.dto.StudentPointTableDtos;
 import com.example.dbclpm.model.Clazz;
+import com.example.dbclpm.model.Student;
 import com.example.dbclpm.model.Subject;
 
 public interface Dao {
@@ -24,4 +26,8 @@ public interface Dao {
     public Term getTermByPointId(int pointId);
     public Term getTermById(int termId);
     public Clazz getClassByPointId(int pointId);
+    public Term getTermByClassId(int classId);
+    public Teacher getTeacherByClassId(int classId);
+    public Student getStudentById(int studentId);
+    public void savePointByClassIdAndStudentId(Connection conn, int classId, int studentId, Float cc, Float btl, Float th, Float ktgk, Float ktck) throws Exception;
 }

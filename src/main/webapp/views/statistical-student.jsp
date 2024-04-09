@@ -114,7 +114,7 @@
              }
              
              .btn-back {
-                width: 10% !important;
+                width: auto !important;
                 height: 100% !important;
              }
         </style>

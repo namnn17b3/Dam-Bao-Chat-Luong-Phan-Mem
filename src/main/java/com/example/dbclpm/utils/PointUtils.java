@@ -25,8 +25,7 @@ public class PointUtils {
             (cc != null && cc.compareTo(zero) == 0) ||
             (btl != null && btl.compareTo(zero) == 0) ||
             (th != null && th.compareTo(zero) == 0) ||
-            (ktgk != null && ktgk.compareTo(zero) == 0) || 
-            (ktck != null && ktck.compareTo(zero) == 0)
+            (ktgk != null && ktgk.compareTo(zero) == 0)
         ) {
             note = "KĐĐKDT";
         }
@@ -66,15 +65,15 @@ public class PointUtils {
     }
     
     public static Float genScorePerFourRank(String scorebyWord) {
-        if (scorebyWord == "F") return 0.0f;
-        if (scorebyWord == "D") return 1.0f;
-        if (scorebyWord == "D+") return 1.5f;
-        if (scorebyWord == "C") return 2.0f;
-        if (scorebyWord == "C+") return 2.5f;
-        if (scorebyWord == "B") return 3.0f;
-        if (scorebyWord == "B+") return 3.5f;
-        if (scorebyWord == "A") return 3.7f;
-        if (scorebyWord == "A+") return 4.0f;
+        if (scorebyWord.equals("F")) return 0.0f;
+        if (scorebyWord.equals("D")) return 1.0f;
+        if (scorebyWord.equals("D+")) return 1.5f;
+        if (scorebyWord.equals("C")) return 2.0f;
+        if (scorebyWord.equals("C+")) return 2.5f;
+        if (scorebyWord.equals("B")) return 3.0f;
+        if (scorebyWord.equals("B+")) return 3.5f;
+        if (scorebyWord.equals("A")) return 3.7f;
+        if (scorebyWord.equals("A+")) return 4.0f;
         return null;
     }
 }
